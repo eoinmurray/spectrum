@@ -14,17 +14,18 @@ def main():
     # Constants with sliders
     E_X = st.sidebar.slider('Exciton Energy (E_X) [eV]', 1.0, 2.0, 1.5, 0.01)
     E_XX = st.sidebar.slider('Biexciton Energy (E_XX) [eV]', 1.0, 2.5, 1.8, 0.01)
-    
+
+    # Fixed energy range
+    E_min = st.sidebar.slider('Energy Range Min [eV]', 0.8, 1.5, 1.2, 0.1)
+    E_max = st.sidebar.slider('Energy Range Max [eV]', 1.8, 2.5, 2.0, 0.1)
+    E = np.linspace(E_min, E_max, 1000)
+
     Gamma_X = st.sidebar.slider('Exciton Linewidth (Gamma_X) [eV]', 0.01, 0.1, 0.05, 0.005)
     Gamma_XX = st.sidebar.slider('Biexciton Linewidth (Gamma_XX) [eV]', 0.01, 0.1, 0.05, 0.005)
     
     fixed_FSS_meV = st.sidebar.slider('Fine Structure Splitting (FSS) [meV]', 0.0, 100.0, 30.0, 1.0)
     fixed_FSS = fixed_FSS_meV * 1e-3  # Convert to eV
-    
-    # Fixed energy range
-    E_min = 1.0
-    E_max = 2.5
-    E = np.linspace(E_min, E_max, 1000)
+
     
     # Polarizer angles and power levels
     st.sidebar.subheader('Polarizer Angles and Power Levels')
@@ -36,7 +37,7 @@ def main():
     
     # Power levels
     num_powers = st.sidebar.slider('Number of Power Levels', 2, 10, 5)
-    max_power = st.sidebar.number_input('Maximum Power Level', 1.0, 100.0, 25.0, 1.0)
+    max_power = st.sidebar.number_input('Maximum Power Level', 1.0, 100.0, 10.0, 1.0)
     power_levels = np.linspace(1.0, max_power, num_powers)
     
     # Fixed parameters for plotting
@@ -68,7 +69,7 @@ def main():
         return I_total, I_X, I_XX
     
     # Create plots
-    fig, axs = plt.subplots(1, 2, figsize=(14, 6), sharex=True, sharey=True)
+    fig, axs = plt.subplots(1, 2, figsize=(20, 10), sharex=True, sharey=True)
     
     # Plot 1: E vs I for varying angle, at fixed power
     alpha_fixed_power = k_alpha * fixed_power
