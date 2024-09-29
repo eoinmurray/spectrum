@@ -1,0 +1,1 @@
+# Replicate QD spectrum
